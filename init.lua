@@ -93,15 +93,16 @@ local function analyse(net, input, opts)
         }
 
         -- always keep track of the input
-        opts.var = 'used'; opts.f = math.max; opts.notUsed = kNotUsed
+        --opts.var = 'used'; opts.f = math.max; opts.notUsed = kNotUsed
         --utils.keepTrack(input, track, entry_fun, fun, opts)
-
+        if not torch.isTypeOf(m, 'nn.Sequential') then
         -- always keep track of the gradOutput
-        opts.var = 'used'; opts.f = math.max; opts.notUsed = kNotUsed
-        utils.keepTrack(gradOutput, track, entry_fun, fun, opts)
+	  opts.var = 'used'; opts.f = math.max; opts.notUsed = kNotUsed
+          utils.keepTrack(gradOutput, track, entry_fun, fun, opts)
 
-        opts.var = 'defined'; opts.f = math.min; opts.notUsed = kNotDefined
-        utils.keepTrack(self.gradInput, track, entry_fun, fun, opts)
+          opts.var = 'defined'; opts.f = math.min; opts.notUsed = kNotDefined
+          utils.keepTrack(self.gradInput, track, entry_fun, fun, opts)
+        end
 
         --[[
         if not m.modules then
