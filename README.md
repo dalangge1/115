@@ -166,14 +166,20 @@ models = require 'optnet.models'
 modelname = 'googlenet'
 net, input = models[modelname]()
 
+-- countUsedMemory needs the network to
+-- be initialized with all its buffers
+-- to output correct results
+net:forward(input)
 mem1 = optnet.countUsedMemory(net)
 
 optnet.optimizeMemory(net, input)
 
+net:forward(input)
 mem2 = optnet.countUsedMemory(net)
 
 optnet.removeOptimization(net)
 
+net:forward(input)
 mem3 = optnet.countUsedMemory(net)
 
 print('Before optimization        : '.. mem1.total_size/1024/1024 .. ' MBytes')
