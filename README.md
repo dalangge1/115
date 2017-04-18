@@ -1,4 +1,4 @@
-#OptNet - reducing memory usage in torch neural networks
+# OptNet - reducing memory usage in torch neural networks
 
 Memory optimizations for torch neural networks.
 
